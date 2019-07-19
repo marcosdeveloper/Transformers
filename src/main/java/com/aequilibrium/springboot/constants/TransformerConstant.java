@@ -1,7 +1,7 @@
 package com.aequilibrium.springboot.constants;
 
 /**
- * Class responsible for centralizing the all constants.
+ * Class responsible for centralizing all constants.
  */
 
 public class TransformerConstant {
