@@ -9,10 +9,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.aequilibrium.springboot.constants.TransformerConstant;
 import com.aequilibrium.springboot.element.ResultBattle;
 import com.aequilibrium.springboot.element.Transformer;
 
+@Component
 public class Battle {
 	
 	List<Transformer> listAutobot;

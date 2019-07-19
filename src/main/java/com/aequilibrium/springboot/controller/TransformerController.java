@@ -20,6 +20,8 @@ import com.aequilibrium.springboot.business.Battle;
 import com.aequilibrium.springboot.constants.TransformerConstant;
 import com.aequilibrium.springboot.element.ResultBattle;
 import com.aequilibrium.springboot.element.Transformer;
+import com.aequilibrium.springboot.exception.IncorrectParametersException;
+import com.aequilibrium.springboot.validation.TransformerValidation;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -29,30 +31,40 @@ public class TransformerController {
 	private HashMap<String, Transformer> mapAutobot = new HashMap<String, Transformer>();
 	private HashMap<String, Transformer> mapDecepticon = new HashMap<String, Transformer>();
 	
+	TransformerValidation transformerValidation;
+	
 	@ApiOperation(value = "Create a transformer")
 	@PostMapping("/transformer")
 	public Transformer createTransformer(@RequestBody Transformer transformer) {
-		if (transformer.getTeamMember().toString().equals(TransformerConstant.AUTOBOT)) {
-			mapAutobot.put(transformer.getName(), transformer);
+		transformerValidation = new TransformerValidation(transformer);
+		if (transformerValidation.isTransformerValid()) {
+			if (transformer.getTeamMember().toString().equals(TransformerConstant.AUTOBOT)) {
+				mapAutobot.put(transformer.getName(), transformer);
+			} else {
+				mapDecepticon.put(transformer.getName(), transformer);
+			}
+			return transformer;
 		} else {
-			mapDecepticon.put(transformer.getName(), transformer);
+			throw new IncorrectParametersException(transformerValidation.getMessage());
 		}
-		return transformer;
 	}
 	
 	@ApiOperation(value = "Update a transformer")
 	@PutMapping("/transformer/{name}")
 	public Transformer updateTransformer(@RequestBody Transformer transformer, @PathVariable String name) {
 		Transformer updatedTransformer = new Transformer();
-		if (mapAutobot.containsKey(name)) {
-			mapAutobot.put(name, transformer);
-			updatedTransformer = mapAutobot.get(name);
-		} else if (mapDecepticon.containsKey(name)) {
-			mapDecepticon.put(name, transformer);
-			updatedTransformer = mapDecepticon.get(name);
+		if (transformerValidation.isTransformerValid()) {
+			if (mapAutobot.containsKey(name)) {
+				mapAutobot.put(name, transformer);
+				updatedTransformer = mapAutobot.get(name);
+			} else if (mapDecepticon.containsKey(name)) {
+				mapDecepticon.put(name, transformer);
+				updatedTransformer = mapDecepticon.get(name);
+			}
+			return updatedTransformer;
+		} else {
+			throw new IncorrectParametersException(transformerValidation.getMessage());
 		}
-		
-		return updatedTransformer;
 	}
 	
 	@ApiOperation(value = "Delete a transformer")
@@ -87,7 +99,7 @@ public class TransformerController {
 	@GetMapping("/battle")
 	public ResultBattle goToBattle () {
 		Battle battle = new Battle();
-		ResultBattle resultBattle;
+		ResultBattle resultBattle = new ResultBattle();
 		battle.action(mapAutobot, mapDecepticon);
 		resultBattle = battle.getResultBattle();
 		

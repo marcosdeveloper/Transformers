@@ -6,6 +6,9 @@ package com.aequilibrium.springboot.element;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ResultBattle {
 	
 	private int numberOfBattles;
