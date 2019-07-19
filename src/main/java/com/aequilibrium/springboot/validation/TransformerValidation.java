@@ -3,6 +3,9 @@ package com.aequilibrium.springboot.validation;
 import com.aequilibrium.springboot.constants.TransformerConstant;
 import com.aequilibrium.springboot.element.Transformer;
 
+/**
+ * Class responsible for Validation of Transformer
+ */
 public class TransformerValidation {
 	
 	private boolean transformerValid = true;
