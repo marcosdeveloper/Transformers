@@ -26,7 +26,7 @@ public class Battle {
 	Boolean continueBattle = Boolean.TRUE;
 	
 	/*
-	 * Start the settup action
+	 * Start the setup action
 	 */
 	public void action(HashMap<String, Transformer> mapAutobot, HashMap<String, Transformer> mapDecepticon) {
 		listAutobot = new ArrayList<Transformer>(mapAutobot.values());
