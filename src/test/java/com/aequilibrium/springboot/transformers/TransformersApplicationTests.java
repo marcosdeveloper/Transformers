@@ -2,7 +2,7 @@ package com.aequilibrium.springboot.transformers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +27,7 @@ public class TransformersApplicationTests {
 	Transformer transformerMediumOverallRating2;
 	Battle battle;
 	
-	@BeforeClass
+	@Before
 	public void setup() {
 		transformerOptimusPrime = new Transformer("Optimus Prime", "A",6,7,5,9,10,3,5,10, true);
 		transformerPredaking = new Transformer("Predaking", "A",6,7,5,9,10,3,5,10, true);
